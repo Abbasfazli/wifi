@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>University of Portsmouth London — Guest Wi‑Fi</title>
+
+<!-- ========== CONFIG: Replace these values ========== -->
+<script>
+  const CONFIG = {
+    logoUrl: "https://dummyimage.com/96x96/2a7a4a/ffffff.png&text=UP", // replace with your logo URL
+    uniName: "University of Portsmouth London",
+    ssid: "NC_Guest",           // REPLACE with actual SSID
+    password: "P4uz97hriNMx",          // REPLACE with actual password
+    supportEmail: "abbas.fazli@port.ac.uk", // REPLACE with real support contact
+    canonicalUrl: "" // optional:
+  };
+</script>
+
+<style>
+  :root{
+    --green:#2a7a4a; /* UoP green */
+    --purple:#6a2e8a; /* UoP purple */
+    --muted:#6b6b6b;
+    --bg:#f6f8fa;
+    --card:#ffffff;
+    --radius:12px;
+    --accent:var(--green);
+    --maxw:760px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:#111;font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif;padding:28px 16px;}
+  .wrap{max-width:var(--maxw);margin:0 auto}
+  .branding{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .logo{width:72px;height:72px;border-radius:10px;object-fit:cover;box-shadow:0 6px 18px rgba(10,20,40,0.06);border:2px solid rgba(0,0,0,0.03)}
+  h1{margin:0;font-size:1.1rem;color:var(--purple)}
+  .subtitle{color:var(--muted);font-size:0.95rem;margin-top:6px}
+  .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 8px 24px rgba(10,20,40,0.06)}
+  .lead{font-size:1rem;margin-bottom:12px;color:#222}
+  .grid{display:grid;grid-template-columns:1fr 220px;gap:12px;align-items:start}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .label{font-size:0.85rem;color:var(--muted);margin-bottom:6px}
+  .value{background:#f3f6f9;border-radius:10px;padding:12px;font-weight:700;word-break:break-all;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .btn{background:var(--accent);color:#fff;border:0;padding:10px 12px;border-radius:10px;cursor:pointer;font-weight:600;display:inline-flex;gap:8px;align-items:center}
+  .btn.secondary{background:#fff;color:var(--accent);border:1px solid rgba(0,0,0,0.06)}
+  .btn.ghost{background:transparent;color:var(--muted);border:1px dashed rgba(0,0,0,0.06)}
+  .qrCard{text-align:center;margin-top:6px}
+  .qrCard img{width:220px;height:220px;max-width:100%;border-radius:12px;box-shadow:0 8px 20px rgba(10,20,40,0.04)}
+  .help{font-size:0.92rem;color:var(--muted);margin-top:12px}
+  footer{margin-top:16px;font-size:0.85rem;color:var(--muted);text-align:center}
+  .pill{display:inline-block;background:linear-gradient(90deg,var(--green),var(--purple));color:#fff;padding:6px 10px;border-radius:999px;font-size:0.82rem;font-weight:700}
+  .tiny{font-size:0.82rem;color:var(--muted)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="branding">
+      <img id="logoImg" class="logo" src="" alt="logo"/>
+      <div>
+        <h1 id="title">Campus Guest Wi‑Fi</h1>
+        <div class="subtitle" id="uniText">Tap your phone to the NFC tag or scan QR to open this page.</div>
+      </div>
+    </div>
+
+    <main class="card" role="main" aria-labelledby="title">
+      <p class="lead">Tap your phone to the NFC tag to open this portal. For laptops, copy, email or download the credentials below.</p>
+
+      <div class="grid">
+        <div>
+          <div>
+            <div class="label">Network (SSID)</div>
+            <div class="value" id="ssidDisplay"><span id="ssidText"></span></div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="label">Password</div>
+            <div class="value" id="passDisplay"><span id="passText"></span></div>
+          </div>
+
+          <div class="controls" style="margin-top:12px">
+            <button class="btn" id="copyPassBtn" title="Copy password">Copy password</button>
+            <button class="btn secondary" id="copySsidBtn" title="Copy SSID">Copy SSID</button>
+            <button class="btn ghost" id="emailBtn" title="Email credentials">Email me</button>
+            <a id="dlLink" class="btn secondary" download="GuestWiFi.txt" href="#">Download .txt</a>
+          </div>
+
+          <div class="help">
+            Tip: On your laptop open Wi‑Fi settings → choose <strong id="ssidHint"></strong> → paste the password. If you prefer, scan the QR code (on the plaque or on this page) to transfer the info to your phone.
+          </div>
+        </div>
+
+        <aside>
+          <div class="pill" style="margin-bottom:12px">Guest</div>
+          <div class="qrCard card" style="padding:14px">
+            <div style="font-weight:700;margin-bottom:8px">Scan QR to join</div>
+            <div id="qrContainer" aria-hidden="true">
+              <!-- QR image inserted here -->
+            </div>
+            <div style="margin-top:8px;color:var(--muted);font-size:0.92rem">Or scan the QR on the plaque</div>
+          </div>
+        </aside>
+      </div>
+
+      <footer>Need help? Email <a id="supportLink" href="#">it-support</a></footer>
+    </main>
+
+    <div style="height:16px"></div>
+    <div style="text-align:center;color:var(--muted);font-size:0.9rem">Deployed by IT — University of Portsmouth London</div>
+  </div>
+
+<script>
+  // Inject config values into the page
+  document.getElementById('logoImg').src = CONFIG.logoUrl;
+  document.getElementById('title').textContent = CONFIG.uniName + " — Guest Wi‑Fi";
+  document.getElementById('ssidText').textContent = CONFIG.ssid;
+  document.getElementById('passText').textContent = CONFIG.password;
+  document.getElementById('ssidHint').textContent = CONFIG.ssid;
+  document.getElementById('supportLink').href = 'mailto:' + CONFIG.supportEmail;
+
+  // Copy handlers with feedback
+  function giveFeedback(el, text){
+    const old = el.textContent;
+    el.textContent = text;
+    setTimeout(()=> el.textContent = old, 1300);
+  }
+  document.getElementById('copyPassBtn').addEventListener('click', (e)=> {
+    navigator.clipboard.writeText(CONFIG.password).then(()=> giveFeedback(e.currentTarget,'Copied'));
+  });
+  document.getElementById('copySsidBtn').addEventListener('click', (e)=> {
+    navigator.clipboard.writeText(CONFIG.ssid).then(()=> giveFeedback(e.currentTarget,'Copied'));
+  });
+
+  // Email button - opens user's mail client with pre-filled body
+  document.getElementById('emailBtn').addEventListener('click', ()=> {
+    const subject = encodeURIComponent(`${CONFIG.uniName} - Guest Wi‑Fi credentials`);
+    const body = encodeURIComponent(`SSID: ${CONFIG.ssid}\nPassword: ${CONFIG.password}\n\nConnect on your laptop: open Wi‑Fi settings → choose ${CONFIG.ssid} → paste the password.`);
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  });
+
+  // Prepare download blob
+  const blob = new Blob([`SSID: ${CONFIG.ssid}\nPassword: ${CONFIG.password}\n`], {type:'text/plain'});
+  document.getElementById('dlLink').href = URL.createObjectURL(blob);
+
+  // Generate WIFI: QR using Google Charts (fast demo) — encoded WIFI payload
+  (function generateQr(){
+    const wifiPayload = `WIFI:T:WPA;S:${CONFIG.ssid};P:${CONFIG.password};;`;
+    const qrUrl = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' + encodeURIComponent(wifiPayload);
+    const img = document.createElement('img');
+    img.src = qrUrl;
+    img.alt = 'Wi‑Fi QR';
+    img.style.width = '220px';
+    img.style.height = '220px';
+    img.style.borderRadius = '10px';
+    const q = document.getElementById('qrContainer');
+    q.appendChild(img);
+  })();
+
+  // Optional: show small console message for testers
+  console.log("Guest Wi‑Fi portal loaded. Replace CONFIG values for production.");
+</script>
+</body>
+</html>
